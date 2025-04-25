@@ -22,3 +22,9 @@ func ProcessQuery(client *db.PrismaClient, document, question string) (string, e
 
 	return answer, err
 }
+
+func GetQueryHistory(client *db.PrismaClient) ([]db.QueryModel, error) {
+	return client.Query.FindMany().OrderBy(
+		db.Query.CreatedAt.Order(db.SortOrderDesc),
+	).Exec(context.Background())
+}

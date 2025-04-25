@@ -28,3 +28,13 @@ func HandleQuery(client *db.PrismaClient) fiber.Handler {
 	}
 }
 
+func HandleHistory(client *db.PrismaClient) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		history, err := services.GetQueryHistory(client)
+		if err != nil {
+			return c.Status(500).JSON(fiber.Map{"error": "could not fetch history"})
+		}
+		return c.JSON(history)
+	}
+}
+

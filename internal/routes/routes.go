@@ -9,4 +9,5 @@ import (
 
 func SetupRoutes(app *fiber.App, client *db.PrismaClient) {
 	app.Post("/query", handlers.HandleQuery(client))
+	app.Get("/history", handlers.HandleHistory(client))
 }
