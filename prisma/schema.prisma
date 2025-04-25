@@ -8,8 +8,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Message {
-  id      Int    @id @default(autoincrement())
-  content String
+model Query {
+  id        Int      @id @default(autoincrement())
+  document  String
+  question  String
+  answer    String
   createdAt DateTime @default(now())
 }
