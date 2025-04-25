@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 
 	db "ai-docqa-backend/generated/prisma-client"
+	"ai-docqa-backend/internal/routes"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "8080"
 	}
 
 	client := db.NewClient()
@@ -29,9 +30,7 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("🚀 Hello from Go Fiber!")
-	})
+	routes.SetupRoutes(app, client)
 
 	log.Println("🌍 Server running on port", port)
 	log.Fatal(app.Listen(":" + port))
