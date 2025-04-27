@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 
 	db "ai-docqa-backend/generated/prisma-client"
@@ -29,7 +30,7 @@ func main() {
 	defer client.Prisma.Disconnect()
 
 	app := fiber.New()
-
+	app.Use(cors.New())
 	routes.SetupRoutes(app, client)
 
 	log.Println("🌍 Server running on port", port)
