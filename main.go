@@ -22,23 +22,16 @@ func main() {
 		port = "8080"
 	}
 
-	app := fiber.New()
-	app.Use(cors.New())
-	
-	app.Get("/health", func(c *fiber.Ctx) error {
-		return c.SendString("OK")
-	})
-
 	client := db.NewClient()
 	if err := client.Prisma.Connect(); err != nil {
-		log.Printf("⚠️ Database connection error: %v", err)
-	} else {
-		defer client.Prisma.Disconnect()
-		routes.SetupRoutes(app, client)
+		log.Fatal(err)
 	}
+	defer client.Prisma.Disconnect()
 
-	log.Println("🌍 Server starting on port", port)
-	if err := app.Listen("0.0.0.0:" + port); err != nil {
-		log.Fatalf("Server failed to start: %v", err)
-	}
+	app := fiber.New()
+	app.Use(cors.New())
+	routes.SetupRoutes(app, client)
+
+	log.Println("🌍 Server running on port", port)
+	log.Fatal(app.Listen(":" + port))
 }
