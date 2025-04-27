@@ -5,7 +5,7 @@ echo "Installing Prisma CLI..."
 npm install -g prisma
 
 echo "Generating Prisma client..."
-prisma generate
+npx prisma generate
 
 echo "Building Go app..."
 go build -tags netgo -ldflags '-s -w' -o app
