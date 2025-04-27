@@ -48,8 +48,6 @@ GEMINI_API_KEY="your-gemini-api-key"
 PORT=8080
 ```
 
-````
-
 5. Generate Prisma client:
 ```bash
 npx prisma generate
